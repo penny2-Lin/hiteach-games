@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>HiTeach的互動遊戲室</title>
+</head>
+<body style="margin:0; padding:0; overflow:hidden;">
+    <iframe id="gameFrame" src="" style="width:100vw; height:100vh; border:none;"></iframe>
+
+    <script>
+        // 1. 取得網址中 ?game= 之後的內容
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameFileName = urlParams.get('game'); // 假設輸入 game1
+
+        // 2. 定義您的 GitHub 存放 JSON 的基礎路徑 (請修改成您的 GitHub 帳號與路徑)
+        const jsonBaseUrl = "https://penny2.github.io/hiteach-games/";
+
+        if (gameFileName) {
+            // 3. 自動組合出給 HiTeach 播放器讀取的完整網址
+            const finalConfigUrl = jsonBaseUrl + gameFileName + ".json";
+            const playerUrl = "https://sharing.teammodel.net/ht-pvp-tfgame-play?config_url=" + encodeURIComponent(finalConfigUrl);
+            
+            // 4. 把網址丟進 iframe 裡跑
+            document.getElementById('gameFrame').src = playerUrl;
+        } else {
+            document.write("請在網址後方加上遊戲編號，例如：?game=lesson1");
+        }
+    </script>
+</body>
+</html>
